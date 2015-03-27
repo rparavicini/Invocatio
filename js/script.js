@@ -1,5 +1,12 @@
 // initialize variables
-var creature = {};
+var creature = {
+	summon: {},
+	control: {},
+	costs: {}
+};
+var modifiers = {
+	truename: 0
+};
 var xml = '';
 
 $(function() {
@@ -41,14 +48,10 @@ $(function() {
 
 	});
 
-	// set creature basic data
-	creature.summon_base = $('#summon_base').val();
-	creature.control_base = $('#control_base').val();
-	creature.costs_base = $('#costs_base').val();
-
 	// set values for slider change
 	$('input[type="number"]').on('change', function(e) {
 
+		console.log('range');
 		// init element
 		var el = $(this);
 
@@ -56,7 +59,13 @@ $(function() {
 		var val = el.val();
 
 		// set variable to value of element
-		creature[el.attr('id')] = val;
+		if (el.attr('data-relation') == 'creature') {
+			var id = el.attr('id').split('_');
+			creature[id[0]][id[1]] = val;
+		} else {
+			modifiers[el.attr('id')] = val;
+			console.log(modifiers);
+		}
 
 		// reset select
 		$("#creature-selector option:first").attr('selected','selected');
@@ -82,9 +91,9 @@ $(function() {
 				$('#costs_base').val(cdata.attr('costs')).slider('refresh');
 
 				// set new creature base data
-				creature.summon_base = cdata.attr('summon');
-				creature.control_base = cdata.attr('control');
-				creature.costs_base = cdata.attr('costs');
+				creature.summon.base = cdata.attr('summon');
+				creature.control.base = cdata.attr('control');
+				creature.costs.base = cdata.attr('costs');
 
 			}
 
@@ -94,8 +103,32 @@ $(function() {
 			var page_id = data.toPage[0].id;
 			if (page_id == 'summary') {
 
+				$.each(modifiers, function(key,value) {
+					switch (key) {
+						case 'truename':
+							creature.summon.truename = value;
+							creature.control.truename = Math.round(value/3);
+							break;
+					}
+				})
+console.log(creature);
 				$.each(creature, function(key,value) {
-					$('#summary #summary_' + key).html(value);
+					var sum = 0;
+					var detail = '';
+					$.each(value, function(k,v) {
+						x = parseInt(v);
+						if (x < 0 || (key == 'costs' && k == 'base')) {
+							detail += v;
+						} else {
+							detail += '+' + v;
+						}
+						sum += x;
+					})
+					if (sum > -1 && key != 'costs') {
+						sum = '+' + sum;
+					}
+					$('#summary #summary_' + key + '_detail').html(detail);
+					$('#summary #summary_' + key).html(sum);
 				});
 
 			}
