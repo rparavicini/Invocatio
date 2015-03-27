@@ -48,33 +48,30 @@ $(function() {
 
 	});
 
-	// set values for slider change
-	$('input[type="number"]').on('change', function(e) {
-
-		console.log('range');
-		// init element
-		var el = $(this);
-
-		// get value of element
-		var val = el.val();
-
-		// set variable to value of element
-		if (el.attr('data-relation') == 'creature') {
-			var id = el.attr('id').split('_');
-			creature[id[0]][id[1]] = val;
-		} else {
-			modifiers[el.attr('id')] = val;
-			console.log(modifiers);
-		}
-
-		// reset select
-		$("#creature-selector option:first").attr('selected','selected');
-		$("#creature-selector").selectmenu('refresh');
-
-	});
-
-	// set sliders to selection
 	$('body')
+		// set values for slider change
+		.on('change', 'input[type="number"]', function(e) {
+
+			// init element
+			var el = $(this);
+
+			// get value of element
+			var val = el.val();
+
+			// set variable to value of element
+			if (el.attr('data-relation') == 'creature') {
+				var id = el.attr('id').split('_');
+				creature[id[0]][id[1]] = val;
+			} else {
+				modifiers[el.attr('id')] = val;
+			}
+
+			// reset select
+			$("#creature-selector option:first").attr('selected','selected');
+			$("#creature-selector").selectmenu('refresh');
+
+		})
+		// set sliders to selection
 		.on('change', '#creature-selector', function(e) {
 
 			// init element
@@ -98,6 +95,7 @@ $(function() {
 			}
 
 		})
+		// on pagechange
 		.on('pagecontainerchange', function(e, data) {
 
 			var page_id = data.toPage[0].id;
@@ -106,8 +104,8 @@ $(function() {
 				$.each(modifiers, function(key,value) {
 					switch (key) {
 						case 'truename':
-							creature.summon.truename = value;
-							creature.control.truename = Math.round(value/3);
+							creature.summon.truename = value * -1;
+							creature.control.truename = Math.round(value/-3);
 							break;
 					}
 				})
