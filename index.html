@@ -29,6 +29,15 @@
 
 			<div id="creature-selector"></div>
 
+			<select name="creature_type" id="creature_type" >
+				<option value="chimera">Chim&auml;re</option>
+				<option value="demon">D&auml;mon</option>
+				<option value="elemental">Elementar</option>
+				<option value="ghost">Geist</option>
+				<option value="golem">Golem</option>
+				<option value="undead">Untoter</option>
+			</select>
+
 			<label for="summon_base">Beschw&ouml;rung</label>
 			<input type="range" name="summon_base" id="summon_base" value="0" min="0" max="30" data-highlight="true" data-relation="creature" />
 
@@ -58,11 +67,89 @@
 
 			<h2>Beschw&ouml;rer definieren</h2>
 
-			<label for="skill_base">ZfW</label>
-			<input type="range" name="skill_base" id="skill_base" value="11" min="0" max="30" data-highlight="true" />
+			<label for="zfw_base">ZfW</label>
+			<input type="range" name="zfw_base" id="zfw_base" value="11" min="0" max="30" data-relation="summoner" data-highlight="true" />
 
 			<label for="truename">Wahrer Name</label>
 			<input type="range" name="truename" id="truename" value="0" min="0" max="7" data-highlight="true" />
+
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<legend>Gewandung/Aussehen:</legend>
+				<input type="radio" name="outfit" id="outfit0" value="0" checked="checked">
+				<label for="outfit0">unpassend</label>
+				<input type="radio" name="outfit" id="outfit1" value="1">
+				<label for="outfit1">teilweise</label>
+				<input type="radio" name="outfit" id="outfit2" value="2">
+				<label for="outfit2">vollst&auml;ndig</label>
+			</fieldset>
+
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<legend>Beschw&ouml;rungskerzen:</legend>
+				<input type="radio" name="candle" id="candlena" value="na" checked="checked">
+				<label for="candlena">na</label>
+				<input type="radio" name="candle" id="candlea" value="a">
+				<label for="candlea">A</label>
+				<input type="radio" name="candle" id="candleb" value="b">
+				<label for="candleb">B</label>
+				<input type="radio" name="candle" id="candlec" value="c">
+				<label for="candlec">C</label>
+				<input type="radio" name="candle" id="candled" value="d" >
+				<label for="candled">D</label>
+				<input type="radio" name="candle" id="candlee" value="e">
+				<label for="candlee">E</label>
+				<input type="radio" name="candle" id="candlef" value="f">
+				<label for="candlef">F</label>
+			</fieldset>
+
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<legend>Zauberkreide:</legend>
+				<input type="radio" name="chalk" id="chalkna" value="na" checked="checked">
+				<label for="chalkna">na</label>
+				<input type="radio" name="chalk" id="chalka" value="a">
+				<label for="chalka">A</label>
+				<input type="radio" name="chalk" id="chalkb" value="b">
+				<label for="chalkb">B</label>
+				<input type="radio" name="chalk" id="chalkc" value="c">
+				<label for="chalkc">C</label>
+				<input type="radio" name="chalk" id="chalkd" value="d" >
+				<label for="chalkd">D</label>
+				<input type="radio" name="chalk" id="chalke" value="e">
+				<label for="chalke">E</label>
+				<input type="radio" name="chalk" id="chalkf" value="f">
+				<label for="chalkf">F</label>
+			</fieldset>
+
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<legend>Kreis der Verdammnis (passend):</legend>
+				<input type="radio" name="circle" id="circle0" value="0" checked="checked">
+				<label for="circle0">na</label>
+				<input type="radio" name="circle" id="circle1" value="1">
+				<label for="circle1">1.</label>
+				<input type="radio" name="circle" id="circle2" value="2">
+				<label for="circle2">2.</label>
+				<input type="radio" name="circle" id="circle3" value="3">
+				<label for="circle3">3.</label>
+				<input type="radio" name="circle" id="circle4" value="4" >
+				<label for="circle4">4.</label>
+				<input type="radio" name="circle" id="circle5" value="5">
+				<label for="circle5">5.</label>
+				<input type="radio" name="circle" id="circle6" value="6">
+				<label for="circle6">6.</label>
+				<input type="radio" name="circle" id="circle7" value="7">
+				<label for="circle7">7.</label>
+			</fieldset>
+
+			<fieldset data-role="controlgroup">
+				<legend>Ausr&uuml;stung:</legend>
+				<input type="checkbox" name="sword" id="sword">
+				<label for="sword">Bannschwert (nur D/G)</label>
+				<input type="checkbox" name="integra" id="integra">
+				<label for="integra">Invocatio Integra</label>
+				<input type="checkbox" name="checkbox-3a" id="checkbox-3a">
+				<label for="checkbox-3a">Fritos</label>
+				<input type="checkbox" name="checkbox-4a" id="checkbox-4a">
+				<label for="checkbox-4a">Sun Chips</label>
+			</fieldset>
 
 		</div>
 
@@ -81,6 +168,7 @@
 		</div>
 
 		<div data-role="content">
+			<p>ZfW: <span id="summary_zfw">11</span> (<span id="summary_zfw_detail">11</span>)</p>
 			<p>Beschw&ouml;rung: <span id="summary_summon">0</span> (<span id="summary_summon_detail">+0</span>)</p>
 			<p>Beherrschung: <span id="summary_control">0</span> (<span id="summary_control_detail">+0</span>)</p>
 			<p>Kosten: <span id="summary_costs">0</span> (<span id="summary_costs_detail">0</span>)</p>

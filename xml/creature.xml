@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <creatures>
-	<creaturegroup name="Dämonen">
+	<creaturegroup name="Dämonen" creaturetype="demon">
 		<creature summon="16" control="5" costs="20">Achorhobai</creature>
 		<creature summon="10" control="7" costs="11">Agribaal</creature>
 		<creature summon="16" control="7" costs="30">Amrifas</creature>
