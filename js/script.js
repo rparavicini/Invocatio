@@ -23,7 +23,7 @@ var xml = '';
 $(function() {
 
 	// parse xml
-	$.get('http://dsa.powergamer.at/xml/creature.xml').done(function(data) {
+	$.get('xml/creature.xml').done(function(data) {
 
 		// define xml
 		xml = $(data);
@@ -144,120 +144,123 @@ $(function() {
 		.on('pagecontainerchange', function(e, data) {
 
 			var page_id = data.toPage[0].id;
-			if (page_id == 'summary') {
-
-				$.each(modifiers, function(key,value) {
-					if (value == 0) {
-						delete creature.summon[key];
-						delete creature.control[key];
-						return true;
-					}
-					switch (key) {
-						case 'truename':
-							creature.summon[key] = value * -1;
-							creature.control[key] = Math.round(value/-3);
-							break;
-						case 'outfit':
-						case 'sword':
-							creature.summon[key] = value * -1;
-							creature.control[key] = value * -1;
-							break;
-						case 'integra':
-							summoner.zfw[key] = 7;
-							break;
-						case 'candle':
-							switch (value) {
-								case 'na':
-								case 'a':
-									delete creature.summon[key];
-									delete creature.control[key];
-									break;
-								case 'b':
-									creature.summon[key] = -1;
-									break;
-								case 'c':
-									creature.control[key] = -1;
-									break;
-								case 'd':
-									creature.summon[key] = -1;
-									creature.control[key] = -1;
-									break;
-								case 'e':
-									creature.summon[key] = -2;
-									creature.control[key] = -2;
-									break;
-								case 'f':
-									creature.summon[key] = -3;
-									creature.control[key] = -3;
-									break;
-							}
-							break;
-						case 'chalk':
-							switch (value) {
-								case 'na':
-								case 'b':
-									delete creature.summon[key];
-									delete creature.control[key];
-									break;
-								case 'a':
-								case 'c':
-									creature.summon[key] = -1;
-									break;
-								case 'd':
-									creature.summon[key] = -1;
-									creature.control[key] = -1;
-									break;
-								case 'e':
-									creature.summon[key] = -2;
-									creature.control[key] = -1;
-									break;
-								case 'f':
-									creature.summon[key] = -3;
-									creature.control[key] = -2;
-									break;
-							}
-							break;
-						case 'circle':
-							creature.summon[key] = value * -1;
-							creature.control[key] = (value * -1) - 3;
-							break;
-					}
-				})
-
-				$.each(summoner, function(key,value) {
-					var sum = 0;
-					var detail = '';
-					$.each(value, function(k,v) {
-						x = parseInt(v);
-						if (x < 0 || k == 'base') {
-							detail += v;
-						} else {
-							detail += '+' + v;
+			switch (page_id) {
+				case 'summary':
+					$.each(modifiers, function(key,value) {
+						if (value == 0) {
+							delete creature.summon[key];
+							delete creature.control[key];
+							return true;
 						}
-						sum += x;
-					})
-					$('#summary #summary_' + key + '_detail').html(detail);
-					$('#summary #summary_' + key).html(sum);
-				});
-
-				$.each(creature, function(key,value) {
-					var sum = 0;
-					var detail = '';
-					$.each(value, function(k,v) {
-						x = parseInt(v);
-						if (x < 0 || (key == 'costs' && k == 'base')) {
-							detail += v;
-						} else {
-							detail += '+' + v;
+						switch (key) {
+							case 'truename':
+								creature.summon[key] = value * -1;
+								creature.control[key] = Math.round(value/-3);
+								break;
+							case 'outfit':
+							case 'sword':
+								creature.summon[key] = value * -1;
+								creature.control[key] = value * -1;
+								break;
+							case 'integra':
+								summoner.zfw[key] = 7;
+								break;
+							case 'candle':
+								switch (value) {
+									case 'na':
+									case 'a':
+										delete creature.summon[key];
+										delete creature.control[key];
+										break;
+									case 'b':
+										creature.summon[key] = -1;
+										break;
+									case 'c':
+										creature.control[key] = -1;
+										break;
+									case 'd':
+										creature.summon[key] = -1;
+										creature.control[key] = -1;
+										break;
+									case 'e':
+										creature.summon[key] = -2;
+										creature.control[key] = -2;
+										break;
+									case 'f':
+										creature.summon[key] = -3;
+										creature.control[key] = -3;
+										break;
+								}
+								break;
+							case 'chalk':
+								switch (value) {
+									case 'na':
+									case 'b':
+										delete creature.summon[key];
+										delete creature.control[key];
+										break;
+									case 'a':
+									case 'c':
+										creature.summon[key] = -1;
+										break;
+									case 'd':
+										creature.summon[key] = -1;
+										creature.control[key] = -1;
+										break;
+									case 'e':
+										creature.summon[key] = -2;
+										creature.control[key] = -1;
+										break;
+									case 'f':
+										creature.summon[key] = -3;
+										creature.control[key] = -2;
+										break;
+								}
+								break;
+							case 'circle':
+								creature.summon[key] = value * -1;
+								creature.control[key] = (value * -1) - 3;
+								break;
 						}
-						sum += x;
 					})
-					if (sum > -1 && key != 'costs') {
-						sum = '+' + sum;
-					}
-					$('#summary #summary_' + key + '_detail').html(detail);
-					$('#summary #summary_' + key).html(sum);
-				});
+
+					$.each(summoner, function(key,value) {
+						var sum = 0;
+						var detail = '';
+						$.each(value, function(k,v) {
+							x = parseInt(v);
+							if (x < 0 || k == 'base') {
+								detail += v;
+							} else {
+								detail += '+' + v;
+							}
+							sum += x;
+						})
+						$('#summary #summary_' + key + '_detail').html(detail);
+						$('#summary #summary_' + key).html(sum);
+					});
+
+					$.each(creature, function(key,value) {
+						var sum = 0;
+						var detail = '';
+						$.each(value, function(k,v) {
+							x = parseInt(v);
+							if (x < 0 || (key == 'costs' && k == 'base')) {
+								detail += v;
+							} else {
+								detail += '+' + v;
+							}
+							sum += x;
+						})
+						if (sum > -1 && key != 'costs') {
+							sum = '+' + sum;
+						}
+						$('#summary #summary_' + key + '_detail').html(detail);
+						$('#summary #summary_' + key).html(sum);
+					});
+					break;
+				case 'summoner':
+					break;
 
 			}
 
