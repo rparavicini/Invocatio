@@ -23,7 +23,7 @@ var xml = '';
 $(function() {
 
 	// parse xml
-	$.get('/xml/creature.xml').done(function(data) {
+	$.get('http://dsa.powergamer.at/xml/creature.xml').done(function(data) {
 
 		// define xml
 		xml = $(data);
