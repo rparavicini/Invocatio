@@ -4,6 +4,7 @@ var creature = {
 	control: {},
 	costs: {},
 };
+var creaturetype = 'chimera';
 var summoner = {
 	zfw: {
 		base: 11,
@@ -17,6 +18,12 @@ var modifiers = {
 	sword: 0,
 	integra: 0,
 	circle: 0,
+	affinity: 0,
+	time: 0,
+	place: 0,
+	presentsummon: 0,
+	presentcontrol: 0,
+	bloodmagic: 0,
 };
 var xml = '';
 
@@ -60,6 +67,18 @@ $(function() {
 	});
 
 	$('body')
+		// change Page 
+		.on('click', '[data-href]', function(e) {
+
+			// init element
+			var el = $(this);
+
+			// fetch uri
+			var uri = el.attr('data-href');
+
+			$.mobile.changePage(uri, { changeHash: false });
+
+		})
 		// set values for slider change
 		.on('change', 'input[type="number"]', function(e) {
 
@@ -109,9 +128,16 @@ $(function() {
 
 				// set creature type select
 				var ctype = gdata.attr('creaturetype');
-				$('#creature_type').val(ctype).selectmenu('refresh');;
+				$('#creaturetype').val(ctype).selectmenu('refresh');
+				creaturetype = ctype;
 
 			}
+
+		})
+		// set creaturetype
+		.on('change', '#creaturetype', function(e) {
+
+			creaturetype = $(this).val();
 
 		})
 		// set values for radio change
@@ -145,6 +171,10 @@ $(function() {
 
 			var page_id = data.toPage[0].id;
 			switch (page_id) {
+				case 'summoner':
+					$('[data-show-on]').hide();
+					$('[data-show-on*="' + creaturetype + '"]').show();
+					break;
 				case 'summary':
 					$.each(modifiers, function(key,value) {
 						if (value == 0) {
@@ -221,6 +251,46 @@ $(function() {
 								creature.summon[key] = value * -1;
 								creature.control[key] = (value * -1) - 3;
 								break;
+							case 'affinity':
+								creature.summon[key] = -3;
+								creature.control[key] = -3;
+								break;
+							case 'time':
+								creature.summon[key] = value;
+								creature.control[key] = Math.round(Math.abs(value)/3);
+								if (value < 0) {
+									creature.control[key] = creature.control[key] * -1;
+								}
+								break;
+							case 'place':
+								creature.summon[key] = value;
+								creature.control[key] = Math.round(Math.abs(value)/3);
+								if (value < 0) {
+									creature.control[key] = creature.control[key] * -1;
+								}
+								break;
+							case 'presentsummon':
+								creature.summon[key] = value * -1;
+								break;
+							case 'presentcontrol':
+								creature.control[key] = -2;
+								break;
+							case 'bloodmagic':
+								if (creaturetype == 'elemental') {
+									creature.control[key] = +12;
+								} else {
+									creature.control[key] = +2;
+									if (creaturetype == 'demon' && modifiers.integra != 0) {
+										summoner.zfw[key] = 3;
+									}
+								}
+								break;
+							case 'lore':
+								creature.summon[key] = Math.round(value / 2) * -1;
+								break;
+							case 'drawing':
+								creature.summon[key] = Math.round(value / 2) * -1;
+								break;
 						}
 					})
 
@@ -259,13 +329,11 @@ $(function() {
 						$('#summary #summary_' + key).html(sum);
 					});
 					break;
-				case 'summoner':
-					break;
 
 			}
 
-			$('[data-role="footer"] [href]').removeClass('ui-disabled');	
-			$('[href="#' + page_id + '"]').addClass('ui-disabled');	
+			$('[data-role="footer"] [data-href]').removeClass('ui-disabled');	
+			$('[data-href="#' + page_id + '"]').addClass('ui-disabled');	
 
 		})
 

@@ -29,7 +29,7 @@
 
 			<div id="creature-selector"></div>
 
-			<select name="creature_type" id="creature_type" >
+			<select name="creaturetype" id="creaturetype" >
 				<option value="chimera">Chim&auml;re</option>
 				<option value="demon">D&auml;mon</option>
 				<option value="elemental">Elementar</option>
@@ -50,9 +50,9 @@
 		</div>
 
 		<div data-role="footer" data-position="fixed">
-			<a href="#creature" data-role="button" class="ui-disabled">Wesen</a>
-			<a href="#summoner" data-role="button">Beschw&ouml;rer</a>
-			<a href="#summary" data-role="button">Zusammenfassung</a>
+			<a data-role="button" data-href="#creature" class="ui-disabled">Wesen</a>
+			<a data-role="button" data-href="#summoner">Beschw&ouml;rer</a>
+			<a data-role="button" data-href="#summary">Zusammenfassung</a>
 		</div>
 
 	</div>
@@ -83,7 +83,7 @@
 				<label for="outfit2">vollst&auml;ndig</label>
 			</fieldset>
 
-			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-show-on="demon undead chimera golem ghost">
 				<legend>Beschw&ouml;rungskerzen:</legend>
 				<input type="radio" name="candle" id="candlena" value="na" checked="checked">
 				<label for="candlena">na</label>
@@ -101,7 +101,7 @@
 				<label for="candlef">F</label>
 			</fieldset>
 
-			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-show-on="demon undead chimera golem ghost">
 				<legend>Zauberkreide:</legend>
 				<input type="radio" name="chalk" id="chalkna" value="na" checked="checked">
 				<label for="chalkna">na</label>
@@ -119,8 +119,8 @@
 				<label for="chalkf">F</label>
 			</fieldset>
 
-			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-				<legend>Kreis der Verdammnis (passend):</legend>
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-show-on="demon">
+				<legend>Kreis der Verdammnis:</legend>
 				<input type="radio" name="circle" id="circle0" value="0" checked="checked">
 				<label for="circle0">na</label>
 				<input type="radio" name="circle" id="circle1" value="1">
@@ -139,24 +139,52 @@
 				<label for="circle7">7.</label>
 			</fieldset>
 
+			<label for="time">Zeit</label>
+			<input type="range" name="time" id="time" value="0" min="-3" max="3" data-highlight="true" />
+
+			<label for="place">Ort</label>
+			<input type="range" name="place" id="place" value="0" min="-7" max="7" data-highlight="true" />
+
+			<label for="lore">Magiekunde TaP*</label>
+			<input type="range" name="lore" id="lore" value="1" min="1" max="50" data-highlight="true" />
+
+			<label for="drawing">Malen/Zeichnen TaP*</label>
+			<input type="range" name="drawing" id="drawing" value="1" min="1" max="50" data-highlight="true" />
+
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<legend>Geschenk (Beschw&ouml;rung):</legend>
+				<input type="radio" name="presentsummon" id="presentsummon0" value="0" checked="checked">
+				<label for="presentsummon0">na</label>
+				<input type="radio" name="presentsummon" id="presentsummon1" value="2">
+				<label for="presentsummon1">1</label>
+				<input type="radio" name="presentsummon" id="presentsummon2" value="4">
+				<label for="presentsummon2">2</label>
+				<input type="radio" name="presentsummon" id="presentsummon3" value="6">
+				<label for="presentsummon3">3</label>
+				<input type="radio" name="presentsummon" id="presentsummon4" value="7" >
+				<label for="presentsummon4">4+</label>
+			</fieldset>
+
 			<fieldset data-role="controlgroup">
 				<legend>Ausr&uuml;stung:</legend>
-				<input type="checkbox" name="sword" id="sword">
-				<label for="sword">Bannschwert (nur D/G)</label>
-				<input type="checkbox" name="integra" id="integra">
-				<label for="integra">Invocatio Integra</label>
-				<input type="checkbox" name="checkbox-3a" id="checkbox-3a">
-				<label for="checkbox-3a">Fritos</label>
-				<input type="checkbox" name="checkbox-4a" id="checkbox-4a">
-				<label for="checkbox-4a">Sun Chips</label>
+				<input type="checkbox" name="sword" id="sword" data-show-on="demon ghost">
+				<label for="sword" data-show-on="demon ghost">Bannschwert (nur D/G)</label>
+				<input type="checkbox" name="integra" id="integra" data-show-on="demon">
+				<label for="integra" data-show-on="demon">Invocatio Integra</label>
+				<input type="checkbox" name="affinity" id="affinity" data-show-on="demon ghost elemental">
+				<label for="affinity" data-show-on="demon ghost elemental">Affinit&auml;t</label>
+				<input type="checkbox" name="presentcontrol" id="presentcontrol">
+				<label for="presentcontrol">Geschenk (Beherrschung)</label>
+				<input type="checkbox" name="bloodmagic" id="bloodmagic">
+				<label for="bloodmagic">Blutmagie</label>
 			</fieldset>
 
 		</div>
 
 		<div data-role="footer" data-position="fixed">
-			<a href="#creature" data-role="button">Wesen</a>
-			<a href="#summoner" data-role="button">Beschw&ouml;rer</a>
-			<a href="#summary" data-role="button">Zusammenfassung</a>
+			<a data-role="button" data-href="#creature">Wesen</a>
+			<a data-role="button" data-href="#summoner">Beschw&ouml;rer</a>
+			<a data-role="button" data-href="#summary">Zusammenfassung</a>
 		</div>
 
 	</div>
@@ -175,9 +203,9 @@
 		</div>
 
 		<div data-role="footer" data-position="fixed">
-			<a href="#creature" data-role="button">Wesen</a>
-			<a href="#summoner" data-role="button">Beschw&ouml;rer</a>
-			<a href="#summary" data-role="button">Zusammenfassung</a>
+			<a data-role="button" data-href="#creature">Wesen</a>
+			<a data-role="button" data-href="#summoner">Beschw&ouml;rer</a>
+			<a data-role="button" data-href="#summary">Zusammenfassung</a>
 		</div>
 
 	</div>
